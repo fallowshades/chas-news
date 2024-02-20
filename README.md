@@ -92,6 +92,196 @@ export default function App({ Component, pageProps }) {
 }
 ```
 
+## hämta data remote och sedan lokalt
+
+### data från api till chas-news pages\international_news
+
+#### Fixa länk enligt page router
+
+index.js
+
+```js
+<Link href="/international_news">international news</Link>
+```
+
+#### hämta data och kopiera json
+
+```js
+/**
+ * const DIN_API_NYCKEL = 'pub_'
+const QUERY_PARAMETERS = '&country=us&category=world'
+export async function GET() {
+  const filePath = path.resolve(
+    process.cwd(),
+    'assets',
+    'international_news.json'
+  )
+  const res = await fetch()
+
+  //`https://newsapi.org/v2/everything?apiKey=${DIN_API_NYCKEL}${QUERY_PARAMETERS}`
+  // const data = await res.json()
+
+  return {
+    props: {
+      news: data,
+    },
+  }
+}
+ */
+```
+
+```js
+import { getLocalData } from '../lib/localdata'
+
+export async function getStaticProps() {
+  const localData = await getLocalData()
+  console.log(localData)
+  return {
+    props: { news: localData },
+  }
+}
+```
+
+#### var hitter vi json filen?
+
+- enligt dokumentation https://vercel.com/guides/loading-static-file-nextjs-api-route
+
+json\data.json
+
+```js
+[
+  {
+    "article_id": "7a0bd0a62f3c00a41cb3ea58fdae8c10",
+    "title": "Mark Noke murder accused says he was 'at home taking drugs'",
+    "link": "https://www.dailyecho.co.uk/news/24129573.mark-noke-murder-accused-says-at-home-taking-drugs/?ref=rss",
+    "keywords": null,
+    "creator": null,
+    "video_url": null,
+    "description": "A man accused of murdering Mark Noke during a failed robbery in Southampton has told a jury he was not present as he was at home taking drugs",
+    "content": "ONLY AVAILABLE IN PAID PLANS",
+    "pubDate": "2024-02-20 03:30:00",
+    "image_url": "https://www.dailyecho.co.uk/resources/images/17767476/?type=app&htype=0",
+    "source_id": "dailyecho",
+    "source_url": "https://www.dailyecho.co.uk",
+    "source_icon": "https://ik.imagekit.io/plantoraImg/domain_icons/dailyecho.png",
+    "source_priority": 232843,
+    "country": ["united kingdom"],
+    "category": ["top"],
+    "language": "english",
+    "ai_tag": "ONLY AVAILABLE IN PROFESSIONAL AND CORPORATE PLANS",
+    "sentiment": "ONLY AVAILABLE IN PROFESSIONAL AND CORPORATE PLANS",
+    "sentiment_stats": "ONLY AVAILABLE IN PROFESSIONAL AND CORPORATE PLANS",
+    "ai_region": "ONLY AVAILABLE IN CORPORATE PLANS"
+  },
+  ...
+
+]
+```
+
+\lib\localdata.js
+
+```js
+import fsPromises from 'fs/promises'
+import path from 'path'
+
+export async function getLocalData() {
+  // Get the path of the json file
+  const filePath = path.join(process.cwd(), 'src/json/data.json')
+  // Read the json file
+  const jsonData = await fsPromises.readFile(filePath)
+  // Parse data as json
+  const objectData = JSON.parse(jsonData)
+
+  return objectData
+}
+```
+
+#### skapa fina nyhets kort
+
+```sh
+npx shadcn-ui@latest add badge separator card
+npm install uuid
+```
+
+international_news.js
+
+```js
+import Link from 'next/link'
+import NewsCard from '@/components/NewsCard'
+
+import { v4 as uuidv4 } from 'uuid'
+const International_news = ({ news }) => {
+  console.log(news)
+  return (
+    <div>
+      <h1>Latest international news</h1>
+
+      {news.map((item) => {
+        return <NewsCard key={uuidv4()} newsItem={item} />
+      })}
+    </div>
+  )
+}
+export default International_news
+```
+
+NewsCard.js
+
+```js
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { Button } from '@radix-ui/themes'
+import { Link } from '@radix-ui/themes'
+import Image from 'next/image'
+const NewsCard = ({ newsItem }) => {
+  const {
+    ai_region,
+    ai_tag,
+    article_id,
+    category,
+    content,
+    country,
+    creator: creator,
+    description,
+    image_url,
+    keywords: keywords,
+    language,
+    link,
+    pubData,
+    sentiment,
+    sentiment_stats,
+    source_icon: source_icon,
+    source_id,
+    source_priority,
+    source_url,
+    title,
+    video_url: video_url,
+  } = newsItem
+  return (
+    <Card className="bg-muted">
+      <CardHeader>
+        <CardTitle>Card title</CardTitle>
+        <CardDescription>p</CardDescription>
+      </CardHeader>
+
+      <CardContent>{/* card info */}</CardContent>
+      <CardFooter className="flex gap-4">
+        <Button asChild size="sm">
+          <Link href={`/news/${newsItem.article_id}`}>...</Link>
+        </Button>
+      </CardFooter>
+    </Card>
+  )
+}
+export default NewsCard
+```
+
 ## Getting Started
 
 First, run the development server:

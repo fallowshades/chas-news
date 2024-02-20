@@ -12,9 +12,7 @@ export default function Home() {
     >
       <p>hej</p>
       <Button asChild className="mt-4">
-        <Link href="/(dashboard)/International_news/page">
-          international news
-        </Link>
+        <Link href="/international_news">international news</Link>
       </Button>
     </div>
   )
