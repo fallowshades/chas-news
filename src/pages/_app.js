@@ -1,5 +1,14 @@
 import "@/styles/globals.css";
+import React from "react";
+import SportsNews from "./components/sportsnews";
 
-export default function App({ Component, pageProps }) {
-  return <Component {...pageProps} />;
-}
+const App = () => {
+  return (
+    <div>
+      {/* Annan innehåll och komponenter */}
+      <SportsNews />
+    </div>
+  );
+};
+
+export default App;
