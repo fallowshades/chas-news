@@ -2,7 +2,7 @@
 
 // src/components/SportsNews.js
 import React, { useEffect, useState } from "react";
-import fetchNews from "../services/newsService";
+import fetchNews from "";
 
 const SportsNews = () => {
   const [sportsNews, setSportsNews] = useState([]);
@@ -32,7 +32,7 @@ const SportsNews = () => {
           <li key={news.id}>
             <h3>{news.title}</h3>
             <p>{news.description}</p>
-            {/* Visa andra nyhetsinformation som du vill inkludera */}
+            {/* visa annan information som man vill ha */}
           </li>
         ))}
       </ul>
