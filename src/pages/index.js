@@ -7,8 +7,8 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
+    <div
+      className={`flex min-h-screen flex-col items-center  p-24 ${inter.className}`}
     >
       <p>hej</p>
       <Button asChild className="mt-4">
@@ -16,6 +16,6 @@ export default function Home() {
           international news
         </Link>
       </Button>
-    </main>
+    </div>
   )
 }

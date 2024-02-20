@@ -47,6 +47,51 @@ export default function Home() {
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+### placera alla element i context som har en nav och eventuellt en sidebar
+
+- skapa Navbar.js
+
+layoutProvider.js
+
+```js
+import Navbar from '@/components/Navbar'
+
+const LayoutContext = createContext()
+
+const Layout = ({ children }) => {
+  return (
+    <LayoutContext.Provider value={{}}>
+      <main className="grid lg:grid-cols-5">
+        {/* first-col hide on small screen */}
+
+        {/* second-col hide dropdown on big screen */}
+
+        <div className="lg:col-span-4">
+          <Navbar />
+          <div className="py-16 px-4 sm:px-8 lg:px-16">{children}</div>
+        </div>
+      </main>
+    </LayoutContext.Provider>
+  )
+}
+export const useLayoutContext = () => useContext(LayoutContext)
+export default Layout
+```
+
+#### detta är möjligt genom att wrappa appen i ens context. sidebar och nav följer låd modellen
+
+```js
+import '@/styles/globals.css'
+import Layout from './layoutProvider'
+export default function App({ Component, pageProps }) {
+  return (
+    <Layout>
+      <Component {...pageProps} />;
+    </Layout>
+  )
+}
+```
+
 ## Getting Started
 
 First, run the development server:
