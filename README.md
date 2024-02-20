@@ -1,4 +1,96 @@
+# chas news
+
+## navigering
+
+### skapa mapp/folder structur
+
+- några folders och filer
+
+#### importera components
+
+```sh
+npx shadcn-ui@latest init
+```
+
+- setup Button
+
+```sh
+npx shadcn-ui@latest init
+```
+
+#### länk till en ny sida
+
+index.js
+
+```js
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
+```
+
+```js
+export default function Home() {
+  return (
+    <main
+      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
+    >
+      <p>tjo</p>
+      <p>hej</p>
+      <Button asChild className="mt-4">
+        <Link href="/(dashboard)/International_news/page">
+          international news
+        </Link>
+      </Button>
+    </main>
+  )
+}
+```
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+### placera alla element i context som har en nav och eventuellt en sidebar
+
+- skapa Navbar.js
+
+layoutProvider.js
+
+```js
+import Navbar from '@/components/Navbar'
+
+const LayoutContext = createContext()
+
+const Layout = ({ children }) => {
+  return (
+    <LayoutContext.Provider value={{}}>
+      <main className="grid lg:grid-cols-5">
+        {/* first-col hide on small screen */}
+
+        {/* second-col hide dropdown on big screen */}
+
+        <div className="lg:col-span-4">
+          <Navbar />
+          <div className="py-16 px-4 sm:px-8 lg:px-16">{children}</div>
+        </div>
+      </main>
+    </LayoutContext.Provider>
+  )
+}
+export const useLayoutContext = () => useContext(LayoutContext)
+export default Layout
+```
+
+#### detta är möjligt genom att wrappa appen i ens context. sidebar och nav följer låd modellen
+
+```js
+import '@/styles/globals.css'
+import Layout from './layoutProvider'
+export default function App({ Component, pageProps }) {
+  return (
+    <Layout>
+      <Component {...pageProps} />;
+    </Layout>
+  )
+}
+```
 
 ## Getting Started
 
