@@ -1,3 +1,50 @@
+# chas news
+
+## navigering
+
+### skapa mapp/folder structur
+
+- några folders och filer
+
+#### importera components
+
+```sh
+npx shadcn-ui@latest init
+```
+
+- setup Button
+
+```sh
+npx shadcn-ui@latest init
+```
+
+#### länk till en ny sida
+
+index.js
+
+```js
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
+```
+
+```js
+export default function Home() {
+  return (
+    <main
+      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
+    >
+      <p>tjo</p>
+      <p>hej</p>
+      <Button asChild className="mt-4">
+        <Link href="/(dashboard)/International_news/page">
+          international news
+        </Link>
+      </Button>
+    </main>
+  )
+}
+```
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
