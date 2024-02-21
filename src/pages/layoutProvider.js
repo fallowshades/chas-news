@@ -1,7 +1,7 @@
-import { createContext, useContext, useEffect, useState } from 'react'
-import Navbar from '@/components/Navbar'
+import { createContext, useContext, useEffect, useState } from "react";
+import Navbar from "@/components/Navbar";
 
-const LayoutContext = createContext()
+const LayoutContext = createContext();
 
 const Layout = ({ children }) => {
   return (
@@ -12,12 +12,12 @@ const Layout = ({ children }) => {
         {/* second-col hide dropdown on big screen */}
 
         <div className="lg:col-span-4">
-          <Navbar />
+          {/* <Navbar /> //Navbar Component is It calling from "_app.js" It will uses in "all Pages"    */}
           <div className="py-16 px-4 sm:px-8 lg:px-16">{children}</div>
         </div>
       </main>
     </LayoutContext.Provider>
-  )
-}
-export const useLayoutContext = () => useContext(LayoutContext)
-export default Layout
+  );
+};
+export const useLayoutContext = () => useContext(LayoutContext);
+export default Layout;
