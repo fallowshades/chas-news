@@ -27,6 +27,9 @@ export default function Home() {
       <Button asChild className="mt-4">
         <Link href="/international_news">international news</Link>
       </Button>
+      <div>
+       
+      </div>
     </div>
   );
 }

@@ -1,13 +1,14 @@
+import apiFetchin from "./api/ApiFetchin";
 import { Html, Head, Main, NextScript } from "next/document";
-import Artikelsidor from "../components/Artikelsidor";
+
 export default function Document() {
   return (
     <Html lang="en">
       <Head />
       <body>
-        <h1>yo</h1>
+        
         <Main />
-        <Artikelsidor />
+        <apiFetchin />
         <NextScript />
       </body>
     </Html>
