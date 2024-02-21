@@ -4,7 +4,7 @@ import React from "react";
 export default function Bookmarks2() {
   return (
     <div>
-      <h1>Bookmarks Page</h1>
+      <h1>Bookmarks Articles</h1>
     </div>
   );
 }

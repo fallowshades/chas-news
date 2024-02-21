@@ -11,6 +11,7 @@ export default function Home() {
     <div
       className={`flex min-h-screen flex-col items-center  p-24 ${inter.className}`}
     >
+      <h1>Last News</h1>
       <p>hej</p>
       <Button asChild className="mt-4">
         <Link href="/international_news">international news</Link>
