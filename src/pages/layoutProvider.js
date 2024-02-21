@@ -12,7 +12,7 @@ const Layout = ({ children }) => {
         {/* second-col hide dropdown on big screen */}
 
         <div className="lg:col-span-4">
-          {/* <Navbar /> //Navbar Component is It calling from "_app.js" It will uses in "all Pages"    */}
+          <Navbar />
           <div className="py-16 px-4 sm:px-8 lg:px-16">{children}</div>
         </div>
       </main>
