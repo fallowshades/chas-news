@@ -1,10 +1,11 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
+import Image from "next/image";
+import { Inter } from "next/font/google";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
+//NOTE: THIS IS THE START PAGE HOME! :)
 export default function Home() {
   return (
     <div
@@ -15,5 +16,5 @@ export default function Home() {
         <Link href="/international_news">international news</Link>
       </Button>
     </div>
-  )
+  );
 }

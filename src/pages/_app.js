@@ -9,3 +9,4 @@ export default function App({ Component, pageProps }) {
     </Layout>
   );
 }
+/* NOTE: THE "NAVIGATION BAR" IS USING THE HEADER OF ALL PAGES. TRY DO NOT USE HEADER TAG IN THE OTHER PAGES.*/

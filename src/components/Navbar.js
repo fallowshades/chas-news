@@ -5,14 +5,14 @@ const Navbar = () => {
       <nav className="p-4">
         <ul className="flex gap-2 text-2xl list-none m-0 p-0">
           <li>
-            <Link href="#">Home</Link>
+            <Link href="/">Home</Link>
           </li>
           <li>
             {/* This will be changed to a Dropdown  */}
             <Link href="#">Categories</Link>
           </li>
           <li>
-            <Link href="#">Bookmarks</Link>
+            <Link href="savedPage">Bookmarks</Link>
           </li>
         </ul>
       </nav>
