@@ -1,10 +1,10 @@
 import Link from "next/link";
 
-const textStyle = "hover:text-amber-400";
+const textStyle = "hover:text-amber-400"; //Tailwind style
 
 const Navbar = () => {
   return (
-    <header class="flex flex-row w-full bg-[#343434] items-center justify-around">
+    <div class="flex flex-row w-full bg-[#343434] items-center justify-around">
       <nav class="p-4 text-white">
         <ul class="flex gap-14 text-2xl list-none m-0 p-0">
           <li class={textStyle}>
@@ -24,7 +24,7 @@ const Navbar = () => {
           </li>
         </ul>
       </nav>
-    </header>
+    </div>
   );
 };
 export default Navbar;
