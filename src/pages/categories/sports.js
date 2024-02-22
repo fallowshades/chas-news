@@ -1,4 +1,4 @@
-import SportsNews from "@/components/sportnews";
+/* import SportsNews from "@/components/sportnews"; */
 import React from "react";
 
 //NOTE:THIS PAGE IS "WORKING" AND CAN BE USED IT
