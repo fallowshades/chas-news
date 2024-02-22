@@ -21,6 +21,9 @@ const Navbar = () => {
             <Link href="/categories/sports">Sport-News</Link>
           </li>
           <li className={textStyle}>
+            <Link href="/categories/gameNews">Games-News</Link>
+          </li>
+          <li className={textStyle}>
             <Link href="/bookmarks2">Bookmarks</Link>
           </li>
         </ul>
