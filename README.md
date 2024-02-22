@@ -282,6 +282,81 @@ const NewsCard = ({ newsItem }) => {
 export default NewsCard
 ```
 
+## använd redux toolkit som cache då
+
+https://redux-toolkit.js.org/usage/nextjs
+
+###
+
+#### an empty instance to be modified directly with useRef
+
+bookmarkSlice.jsx
+
+```js
+import { createSlice } from '@reduxjs/toolkit'
+
+const bookmarkSlice = createSlice({
+  name: 'bookmarks',
+  reducers: {},
+})
+
+export default bookmarkSlice.reducer
+```
+
+StoreProvider.js
+
+- access the store and populate it with initial state
+- (must do this for every new page we navigate to hence need a wrapper to insert bookmarks and children)
+
+```js
+import { useRef } from 'react'
+import { Provider } from 'react-redux'
+import { makeStore } from '../lib/store'
+import { initializeCount } from '../lib/features/bookmark/bookmarkSlice'
+
+import { useAppSelector, useAppDispatch, useAppStore } from '../lib/hooks'
+import {
+  initializeProduct,
+  setProductName,
+} from '../lib/features/bookmark/bookmarkSlice'
+
+export default function StoreProvider({ bookmarks, children }) {
+  const storeRef = useRef(null)
+  if (!storeRef.current) {
+    storeRef.current = makeStore()
+    storeRef.current.dispatch(initializeCount(bookmarks))
+  }
+
+  return <Provider store={storeRef.current}>{children}</Provider>
+}
+```
+
+hooks.js
+
+- will be the wrapper to every unique page and insert data do the store that contain the shared state
+- (just an assumption --> documentation:"set route-specific data")
+
+```js
+import { useDispatch, useSelector, useStore } from 'react-redux'
+
+// Use throughout your app instead of plain `useDispatch` and `useSelector`
+export const useAppDispatch = useDispatch
+export const useAppSelector = useSelector
+export const useAppStore = useStore
+```
+
+####
+
+```js
+
+```
+
+####
+
+```js
+
+```
+
 ## Getting Started
 
 First, run the development server:
