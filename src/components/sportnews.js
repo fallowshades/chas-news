@@ -1,8 +1,7 @@
-//Julis sportsida
+//Julia
 
-// src/components/SportsNews.js
 import React, { useEffect, useState } from "react";
-import fetchNews from "../services/newsService";
+import fetchNews from "@https://newsdata.io/API";
 
 const SportsNews = () => {
   const [sportsNews, setSportsNews] = useState([]);
@@ -10,8 +9,7 @@ const SportsNews = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const newsData = await fetchNews(); // Använd din fetchNews-funktion här
-        // Filtera eller manipulera nyheterna för sportsektionen om det behövs
+        const newsData = await fetchNews();
         const sportsNewsData = newsData.filter(
           (item) => item.category === "sport"
         );
@@ -25,14 +23,13 @@ const SportsNews = () => {
   }, []);
 
   return (
-    <div>
-      <h2>Sports News</h2>
+    <div className="container mx-auto p-4">
+      <h2 className="text-2xl font-bold mb-4">Sports News</h2>
       <ul>
         {sportsNews.map((news) => (
-          <li key={news.id}>
-            <h3>{news.title}</h3>
-            <p>{news.description}</p>
-            {/* Visa andra nyhetsinformation som du vill inkludera */}
+          <li key={news.id} className="mb-4">
+            <h3 className="text-xl font-semibold">{news.title}</h3>
+            <p className="text-gray-600">{news.description}</p>
           </li>
         ))}
       </ul>
