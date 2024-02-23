@@ -19,17 +19,8 @@ export default function Home() {
   /* console.log(list); */
 
   return (
-    <div
-      className={`flex min-h-screen flex-col items-center  p-24 ${inter.className}`}
-    >
+    <div>
       <h1>Latest News</h1>
-      <p>hej</p>
-      <Button asChild className="mt-4">
-        <Link href="/international_news">international news</Link>
-      </Button>
-      <div>
-       
-      </div>
     </div>
   );
 }
