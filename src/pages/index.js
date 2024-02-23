@@ -16,8 +16,8 @@ export default function Home() {
       .then((res) => res.json())
       .then((data) => setList(data.results));
   }, []);
-  /* console.log(list); */
 
+  console.log(list);
   return (
     <div>
       <h1>Latest News</h1>
