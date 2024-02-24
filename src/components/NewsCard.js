@@ -32,7 +32,7 @@ const NewsCard = ({ newsItem }) => {
     source_url,
     title,
     video_url: video_url,
-  } = newsItem
+  } = newsItem || { article_id: '' }
   return (
     <Card className="bg-muted">
       <CardHeader>
@@ -42,9 +42,17 @@ const NewsCard = ({ newsItem }) => {
 
       <CardContent>{/* card info */}</CardContent>
       <CardFooter className="flex gap-4">
-        <Button asChild size="sm">
-          <Link href={`/news/${newsItem.article_id}`}>...</Link>
-        </Button>
+        {newsItem?.article_id ? (
+          <Button asChild size="sm">
+            <Link href={`/categories/news/${newsItem?.article_id}`}>
+              ...read more
+            </Link>
+          </Button>
+        ) : (
+          <Button asChild size="sm">
+            <Link href={`/`}>...back to home</Link>
+          </Button>
+        )}
       </CardFooter>
     </Card>
   )
