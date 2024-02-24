@@ -28,6 +28,7 @@ import { getLocalData } from '@/lib/localdata'
 export async function getStaticProps() {
   const localData = await getLocalData()
   console.log(localData)
+
   return {
     props: { news: localData },
   }
@@ -36,8 +37,8 @@ import { v4 as uuidv4 } from 'uuid'
 const International_news = ({ news }) => {
   console.log(news)
   return (
-    <div className='  p-4 grid grid-col gap-4'>
-      <h1 className='p-4 text-2xl  '>Latest international news</h1>
+    <div className="  p-4 grid grid-col gap-4">
+      <h1 className="p-4 text-2xl  ">Latest international news</h1>
 
       {news.map((item) => {
         return <NewsCard key={uuidv4()} newsItem={item} />

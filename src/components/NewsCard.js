@@ -6,9 +6,11 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { addBookmark } from '@/lib/features/bookmark/bookmarkSlice'
 import { Button } from '@radix-ui/themes'
 import { Link } from '@radix-ui/themes'
 import Image from 'next/image'
+import { useSelector, useDispatch } from 'react-redux'
 const NewsCard = ({ newsItem }) => {
   const {
     ai_region,
@@ -33,6 +35,13 @@ const NewsCard = ({ newsItem }) => {
     title,
     video_url: video_url,
   } = newsItem || { article_id: '' }
+
+  const dispatch = useDispatch()
+
+  const bookmark = () => {
+    dispatch(addBookmark(article_id))
+  }
+
   return (
     <Card className="bg-muted">
       <CardHeader>
@@ -40,7 +49,13 @@ const NewsCard = ({ newsItem }) => {
         <CardDescription>p</CardDescription>
       </CardHeader>
 
-      <CardContent>{/* card info */}</CardContent>
+      <CardContent>
+        <p>
+          this news source allow its users to bookmark their favorite news. go
+          ahead you may pat us on our shoulders.
+        </p>
+        <Button onClick={bookmark}>Bookmark</Button>
+      </CardContent>
       <CardFooter className="flex gap-4">
         {newsItem?.article_id ? (
           <Button asChild size="sm">

@@ -1,9 +1,12 @@
-import "@/styles/globals.css";
-import "@/styles/navbar.css";
+import '@/styles/globals.css'
+import '@/styles/navbar.css'
 
-import Layout from "./layoutProvider";
-import Navbar from "@/components/Navbar";
-export default function App({ Component, pageProps }) {
+import Layout from './layoutProvider'
+import Navbar from '@/components/Navbar'
+
+import { wrapper } from '@/lib/store'
+
+function App({ Component, pageProps }) {
   return (
     <>
       <Navbar /> {/* This component doesn't need consume Context */}
@@ -13,5 +16,7 @@ export default function App({ Component, pageProps }) {
         <Component {...pageProps} />
       </Layout>
     </>
-  );
+  )
 }
+
+export default wrapper.withRedux(App)

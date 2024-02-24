@@ -22,6 +22,7 @@ export async function getStaticProps({ params }) {
   // Fetch the specific news item based on the ID
   const localData = await getLocalDataID(params.id)
   console.log(localData)
+
   return {
     props: { newsItem: localData },
   }

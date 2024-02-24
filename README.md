@@ -541,13 +541,55 @@ const initStoreWithProps = () => {
 export const wrapper = createWrapper(initStoreWithProps)
 ```
 
-#### Phase 2: SSR
+#### Phase 3: Client
+
+- set up, but read next.
+
+```js
+import Layout from './layoutProvider'
+import Navbar from '@/components/Navbar'
+
+import { wrapper } from '@/lib/store'
+
+function App({ Component, pageProps }) {
+  ...
+}
+
+export default wrapper.withRedux(App)
+```
+
+NewsCard.js
+
+- actions are irrelavant only loading need to be wrapped
 
 ```js
 
+import { addBookmark } from '@/lib/features/bookmark/bookmarkSlice'
+import { useSelector, useDispatch } from 'react-redux'
+
+const NewsCard = ({ newsItem }) => {
+  ...
+   const dispatch = useDispatch()
+
+  const bookmark = () => {
+    dispatch(addBookmark(article_id))
+  }
+
+  return (
+    ...
+      <CardContent>
+        <p>
+          this news source allow its users to bookmark their favorite news. go
+          ahead you may pat us on our shoulders.
+        </p>
+        <Button onClick={bookmark}>Bookmark</Button>
+      </CardContent>
+    ...
+  )
+}
 ```
 
-#### Phase 3: Client
+#### Phase 2: SSR
 
 ```js
 
