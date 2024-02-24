@@ -13,14 +13,16 @@ export default function Home() {
 
   /* console.log(list); */
   return (
-    <main class="flex flex-col items-center">
+    <main class="justify-center items-center">
       <div>
-        <div class="block text-4xl">Latest News</div>
+        <div class="p-4 grid justify-center items-center text-4xl">Latest News</div>
       </div>
-      <div>
-        <ul>
+      <div >
+        <ul className="grid grid-cols justify-center items-center gap-3 bg-slate-700">
           {list.map((article) => (
-            <li key={article.id}>
+            <li
+              className="grid grid-cols justify-center items-center bg-slate-300 p-2 m-2 rounded-xl "
+              key={article.id}>
               <LatestNewsArticle articleObj={article} />
             </li>
           ))}
