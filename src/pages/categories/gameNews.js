@@ -1,33 +1,33 @@
-// Import necessary modules
+
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 
-// Define the GameNews component
+
 export default function GameNews() {
-  // Define state variables
+  
   const [news, setNews] = useState([]);
 
-  // Fetch news data on component mount
+  
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        // Fetch data from the news API
+        
         const response = await fetch(
           `https://newsapi.org/v2/everything?q=gaming&apiKey=cdf73ecfeaf54e23975d4ae91a6d1834&pageSize=5&language=en&sortBy=publishedAt&include=image`
         );
         const data = await response.json();
-        // Update the state with the first five articles and their data
+        
         setNews(
           data.articles.slice(0, 5).map(article => ({
             title: article.title,
             description: article.description,
             url: article.url,
-            imageUrl: article.urlToImage, // Assuming the image URL is provided in the article data
-            isHovered: false, // Add isHovered state to track hover state
+            imageUrl: article.urlToImage, 
+            isHovered: false, 
           }))
         );
       } catch (error) {
-        // Handle errors fetching news data
+        
         console.error("Error fetching news:", error);
       }
     };
@@ -35,7 +35,7 @@ export default function GameNews() {
     fetchNews();
   }, []);
 
-  // Handle mouse enter event for the smaller boxes
+  
   const handleMouseEnter = index => {
     setNews(prevNews => {
       const updatedNews = [...prevNews];
@@ -44,7 +44,7 @@ export default function GameNews() {
     });
   };
 
-  // Handle mouse leave event for the smaller boxes
+  
   const handleMouseLeave = index => {
     setNews(prevNews => {
       const updatedNews = [...prevNews];
@@ -53,7 +53,7 @@ export default function GameNews() {
     });
   };
 
-  // Render the component
+  
   return (
     <div
       style={{
@@ -66,19 +66,19 @@ export default function GameNews() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "rgba(255, 255, 255, 0.01)", // Set background color with more transparency
+        backgroundColor: "rgba(255, 255, 255, 0.01)", 
         padding: "20px",
         borderRadius: "8px",
-        boxShadow: "0 4px 16px rgba(0, 0, 0, 0.2)", // Add more shadow to the large box
+        boxShadow: "0 4px 16px rgba(0, 0, 0, 0.2)", 
       }}
     >
       <div
         style={{
           maxWidth: "800px",
-          backgroundColor: "rgba(255, 255, 255, 0.1)", // Set inner box color with more transparency
+          backgroundColor: "rgba(255, 255, 255, 0.1)", 
           borderRadius: "8px",
           padding: "20px",
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", // Add more shadow to the smaller boxes
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", 
         }}
       >
         <div style={{ textAlign: "center", fontSize: "32px", fontWeight: "bold", marginTop: "50px", color: "#000", textShadow: "4px 4px 8px rgba(0, 0, 0, 0.5)" }}>
@@ -94,9 +94,9 @@ export default function GameNews() {
               borderRadius: "8px",
               marginBottom: "20px",
               padding: "20px",
-              transition: "transform 0.2s, background-color 0.2s", // Add transition effect
-              transform: article.isHovered ? "scale(1.02)" : "scale(1)", // Scale up on hover
-              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)", // Add more shadow to the smaller boxes
+              transition: "transform 0.2s, background-color 0.2s", 
+              transform: article.isHovered ? "scale(1.02)" : "scale(1)", 
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)", 
             }}
             onMouseEnter={() => handleMouseEnter(index)}
             onMouseLeave={() => handleMouseLeave(index)}
@@ -107,12 +107,12 @@ export default function GameNews() {
               <a href={article.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
                 <div
                   style={{
-                    backgroundColor: article.isHovered ? "#007bff" : "#ddd", // Change color on hover
+                    backgroundColor: article.isHovered ? "#007bff" : "#ddd", 
                     color: "#fff",
                     padding: "5px 10px",
                     borderRadius: "5px",
                     display: "inline-block",
-                    transition: "background-color 0.2s", // Add transition effect
+                    transition: "background-color 0.2s", 
                   }}
                 >
                   Read more
@@ -126,4 +126,4 @@ export default function GameNews() {
   );
 }
 
-// HERE //
+// Här ska jag skriva en förklarande text till mig/oss och förtydliga vad jag gjort //
