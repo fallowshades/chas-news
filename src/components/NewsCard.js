@@ -54,7 +54,9 @@ const NewsCard = ({ newsItem }) => {
           this news source allow its users to bookmark their favorite news. go
           ahead you may pat us on our shoulders.
         </p>
-        <Button onClick={bookmark}>Bookmark</Button>
+        <Button onClick={bookmark}>
+          <p className="text-sky-400"> Bookmark</p>
+        </Button>
       </CardContent>
       <CardFooter className="flex gap-4">
         {newsItem?.article_id ? (
