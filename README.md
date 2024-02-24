@@ -286,75 +286,127 @@ export default NewsCard
 
 https://redux-toolkit.js.org/usage/nextjs
 
-###
+### individuella artikelsidor (international news)
 
-#### an empty instance to be modified directly with useRef
+#### serverside anrop
 
-bookmarkSlice.jsx
+##### uh dokumentation
 
-```js
-import { createSlice } from '@reduxjs/toolkit'
+- givvet att någon artikel navigerar till hemsidan https://nextjs.org/docs/pages/building-your-application/routing/linking-and-navigating
 
-const bookmarkSlice = createSlice({
-  name: 'bookmarks',
-  reducers: {},
-})
+- behöver generera alla möjliga utfall angående navigering, annars https://nextjs.org/docs/messages/invalid-getstaticpaths-value
 
-export default bookmarkSlice.reducer
-```
+\categories\news\[newsItems].js
 
-StoreProvider.js
+- behöver map för att skapa en "non-mutable" array.
 
-- access the store and populate it with initial state
-- (must do this for every new page we navigate to hence need a wrapper to insert bookmarks and children)
-
-```js
-import { useRef } from 'react'
-import { Provider } from 'react-redux'
-import { makeStore } from '../lib/store'
-import { initializeCount } from '../lib/features/bookmark/bookmarkSlice'
-
-import { useAppSelector, useAppDispatch, useAppStore } from '../lib/hooks'
-import {
-  initializeProduct,
-  setProductName,
-} from '../lib/features/bookmark/bookmarkSlice'
-
-export default function StoreProvider({ bookmarks, children }) {
-  const storeRef = useRef(null)
-  if (!storeRef.current) {
-    storeRef.current = makeStore()
-    storeRef.current.dispatch(initializeCount(bookmarks))
+```ts
+export async function getStaticPaths() {
+  return {
+    paths: Array<string | { params: { [key: string]: string } }>,
+    fallback: boolean,
   }
-
-  return <Provider store={storeRef.current}>{children}</Provider>
 }
 ```
 
-hooks.js
-
-- will be the wrapper to every unique page and insert data do the store that contain the shared state
-- (just an assumption --> documentation:"set route-specific data")
+##### kod
 
 ```js
-import { useDispatch, useSelector, useStore } from 'react-redux'
+import { getLocalDataID, getAllLocalDataIDs } from '@/lib/localdata'
 
-// Use throughout your app instead of plain `useDispatch` and `useSelector`
-export const useAppDispatch = useDispatch
-export const useAppSelector = useSelector
-export const useAppStore = useStore
+// Define the getStaticPaths function
+export async function getStaticPaths() {
+  // Fetch all possible news item IDs
+  const allNewsItemIDs = await getAllLocalDataIDs()
+
+  // Map the IDs to the required format for Next.js
+  const paths = allNewsItemIDs.map((id) => ({
+    params: { newsItem: id.toString() },
+  }))
+
+  return {
+    paths,
+    fallback: false, // Or true if you want to handle paths not generated at build time
+  }
+}
+
+// Define the getStaticProps function
+export async function getStaticProps({ params }) {
+  console.log(params)
+  // Fetch the specific news item based on the ID
+  const localData = await getLocalDataID(params.id)
+  console.log(localData)
+  return {
+    props: { newsItem: localData },
+  }
+}
 ```
 
-####
+#### totals 2 queries för att returnera enstaka artikel och alla id paths
+
+localData.js
 
 ```js
+export async function getLocalDataID(id) {
+  // Get the path of the json file
+  const filePath = path.join(process.cwd(), 'src/json/data.json')
+  // Read the json file
+  const jsonData = await fsPromises.readFile(filePath)
+  // Parse data as json
 
+  jsonData.filter((newsItem) => newsItem.article_id == id)
+  const objectData = JSON.parse(jsonData)
+
+  return objectData
+}
 ```
 
-####
+localData.js
 
 ```js
+export async function getAllLocalDataIDs() {
+  // Get the path of the JSON file
+  const filePath = path.join(process.cwd(), 'src/json/data.json')
+  // Read the JSON file
+  const jsonData = await fsPromises.readFile(filePath)
+  // Parse data as JSON
+  const objectData = JSON.parse(jsonData)
 
+  // Extract all unique IDs from the data
+  const allIDs = objectData.map((newsItem) => newsItem.article_id)
+
+  // Return unique IDs
+  return [...new Set(allIDs)]
+}
+```
+
+#### modifiera kort för att också handera enstaka artiklar. KISS :> (em..)
+
+- footer kan navigera till artikel eller hem
+
+```js
+const NewsCard = ({ newsItem }) => {
+...
+
+return(
+  ...
+        <CardFooter className="flex gap-4">
+
+        {newsItem?.article_id ? (
+          <Button asChild size="sm">
+            <Link href={`/categories/news/${newsItem?.article_id}`}>
+              ...read more
+            </Link>
+          </Button>
+        ) : (
+          <Button asChild size="sm">
+            <Link href={`/`}>...back to home</Link>
+          </Button>
+        )}
+      </CardFooter>
+)
+
+}
 ```
 
 ## Getting Started
@@ -395,3 +447,7 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+```
+
+```
