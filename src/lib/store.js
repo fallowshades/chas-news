@@ -7,12 +7,24 @@ import {
 import bookmark from './features/bookmark/bookmarkSlice'
 import userPreferences from './features/user/userSlice'
 
-const combinedReducer = combineReducers({
+const rootReducer = combineReducers({
   bookmark,
   userPreferences,
 })
 
 import { HYDRATE, createWrapper } from 'next-redux-wrapper'
+
+const masterReducer = (state, action) => {
+  if (action.type === HYDRATE) {
+    const nextState = {
+      ...state,
+      ...action.payload,
+    }
+    return nextState
+  } else {
+    return rootReducer(state, action)
+  }
+}
 
 /**NOT redux
  * const makeStore = () => {
@@ -22,8 +34,7 @@ import { HYDRATE, createWrapper } from 'next-redux-wrapper'
 const initStoreWithProps = () => {
   return configureStore({
     reducer: {
-      bookmark,
-      userPreferences,
+      reducer: masterReducer,
     },
     devTools: true,
   })

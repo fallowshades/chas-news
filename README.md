@@ -600,9 +600,61 @@ Newscard.js
 
 #### Phase 2: SSR
 
+- hydrate actions to get a universal store on both client side and server side.
+
+- i was wrong about phase 3 (require phase 2)
+
+- store.js
+
+```js
+const rootReducer = combineReducers({
+  bookmark,
+  userPreferences,
+})
+
+const masterReducer = (state, action) => {
+  if (action.type === HYDRATE) {
+    const nextState = {
+      ...state,
+
+      ...action.payload,
+    }
+
+    return nextState
+  } else {
+    return rootReducer(state, action)
+  }
+}
+```
+
+```js
+const initStoreWithProps = () => {
+  return configureStore({
+    reducer: {
+      reducer: masterReducer,
+    },
+    devTools: true,
+  })
+}
+```
+
+- install redux toolkit to view store when add bookmarks. https://chromewebstore.google.com/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=sv
+
+- inspiration https://github.com/mayank7924/nextjs-with-redux/tree/redux-toolkit
+- saw both redux and redux toolkit video https://www.youtube.com/watch?v=bpbLq6NxIm8
+
+### visa bokmärkta artiklar
+
+####
+
 ```js
 
 ```
+
+```js
+
+```
+
 
 ## Getting Started
 

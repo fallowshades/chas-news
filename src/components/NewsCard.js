@@ -83,7 +83,7 @@ const NewsCard = ({ newsItem }) => {
         {newsItem?.article_id ? (
           <Button asChild size="sm">
             <Link href={`/categories/news/${newsItem?.article_id}`}>
-              ...read more
+              <p className="text-sky-400">...read more</p>
             </Link>
           </Button>
         ) : (
