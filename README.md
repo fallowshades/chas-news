@@ -409,6 +409,50 @@ return(
 }
 ```
 
+### bokmärka artiklar
+
+#### redux toolkit set up
+
+##### dokumentation
+
+- user guide är för vite SPA applicationer https://redux-toolkit.js.org/usage/usage-guide
+- next.js set up är för app router. https://redux-toolkit.js.org/usage/nextjs
+
+  - SSR (sererside rendering) skapar html sidor, men också redux store på både client side och server side. vi behöver en metod i reducern som motsvarar en case i en switch som motsvarar en serie av många if satser. vi behöver biblioteket så att store.js kan skapas så många gånger nextjs vill att den ska skapas :)
+
+- artikeln refererar till biblioteket https://github.com/kirill-konshin/next-redux-wrapper
+  - redux toolkit bygger vidare på redux. De försöker förmedla något om app level och page level. tyvärr förstår jag inte fullt ut, men nu kör vi brum brum.
+
+##### skapa filer
+
+- kör direkt på redux toolkit https://github.com/kirill-konshin/next-redux-wrapper?tab=readme-ov-file#redux-toolkit
+
+lib\store
+lib\features\bookmark
+lib\hooks
+
+förbered dokumentation enligt 3 faser enligt https://github.com/kirill-konshin/next-redux-wrapper?tab=readme-ov-file#how-it-works
+
+- blir någ lite annorlunda
+
+#### Phase 1: getInitialProps/getStaticProps/getServerSideProps
+
+```js
+
+```
+
+#### Phase 2: SSR
+
+```js
+
+```
+
+#### Phase 3: Client
+
+```js
+
+```
+
 ## Getting Started
 
 First, run the development server:
