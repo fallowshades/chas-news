@@ -591,6 +591,13 @@ const NewsCard = ({ newsItem }) => {
 }
 ```
 
+##### some small fixes
+
+Newscard.js
+
+- styled button
+- add som content from newsdata.io
+
 #### Phase 2: SSR
 
 ```js

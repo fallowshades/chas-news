@@ -45,11 +45,12 @@ const NewsCard = ({ newsItem }) => {
   return (
     <Card className="bg-muted">
       <CardHeader>
-        <CardTitle>Card title</CardTitle>
-        <CardDescription>p</CardDescription>
+        <CardTitle>{title}</CardTitle>
+        <CardDescription>{description}</CardDescription>
       </CardHeader>
 
       <CardContent>
+        {image_url && <img src={image_url} alt={title} />}
         <p>
           this news source allow its users to bookmark their favorite news. go
           ahead you may pat us on our shoulders.
@@ -57,6 +58,26 @@ const NewsCard = ({ newsItem }) => {
         <Button onClick={bookmark}>
           <p className="text-sky-400"> Bookmark</p>
         </Button>
+
+        <div>
+          {false && (
+            <div>
+              {' '}
+              <p>more services our wonderful news source provides</p>
+              {newsItem?.file_url && (
+                <a href={file_url} download>
+                  Download File
+                </a>
+              )}
+              {newsItem?.audio_url && (
+                <audio controls>
+                  <source src={audio_url} type="audio/mpeg" />
+                  Your browser does not support the audio tag.
+                </audio>
+              )}
+            </div>
+          )}
+        </div>
       </CardContent>
       <CardFooter className="flex gap-4">
         {newsItem?.article_id ? (
