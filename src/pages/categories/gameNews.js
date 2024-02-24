@@ -1,11 +1,129 @@
-import React from "react";
+// Import necessary modules
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
 
-//HERE GAME NEWS
+// Define the GameNews component
 export default function GameNews() {
+  // Define state variables
+  const [news, setNews] = useState([]);
+
+  // Fetch news data on component mount
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        // Fetch data from the news API
+        const response = await fetch(
+          `https://newsapi.org/v2/everything?q=gaming&apiKey=cdf73ecfeaf54e23975d4ae91a6d1834&pageSize=5&language=en&sortBy=publishedAt&include=image`
+        );
+        const data = await response.json();
+        // Update the state with the first five articles and their data
+        setNews(
+          data.articles.slice(0, 5).map(article => ({
+            title: article.title,
+            description: article.description,
+            url: article.url,
+            imageUrl: article.urlToImage, // Assuming the image URL is provided in the article data
+            isHovered: false, // Add isHovered state to track hover state
+          }))
+        );
+      } catch (error) {
+        // Handle errors fetching news data
+        console.error("Error fetching news:", error);
+      }
+    };
+
+    fetchNews();
+  }, []);
+
+  // Handle mouse enter event for the smaller boxes
+  const handleMouseEnter = index => {
+    setNews(prevNews => {
+      const updatedNews = [...prevNews];
+      updatedNews[index].isHovered = true;
+      return updatedNews;
+    });
+  };
+
+  // Handle mouse leave event for the smaller boxes
+  const handleMouseLeave = index => {
+    setNews(prevNews => {
+      const updatedNews = [...prevNews];
+      updatedNews[index].isHovered = false;
+      return updatedNews;
+    });
+  };
+
+  // Render the component
   return (
-    <div>
-      <h1>Games news</h1>
+    <div
+      style={{
+        position: "relative",
+        minHeight: "100vh",
+        backgroundImage: `url("/beautiful.webp")`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "rgba(255, 255, 255, 0.01)", // Set background color with more transparency
+        padding: "20px",
+        borderRadius: "8px",
+        boxShadow: "0 4px 16px rgba(0, 0, 0, 0.2)", // Add more shadow to the large box
+      }}
+    >
+      <div
+        style={{
+          maxWidth: "800px",
+          backgroundColor: "rgba(255, 255, 255, 0.1)", // Set inner box color with more transparency
+          borderRadius: "8px",
+          padding: "20px",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", // Add more shadow to the smaller boxes
+        }}
+      >
+        <div style={{ textAlign: "center", fontSize: "32px", fontWeight: "bold", marginTop: "50px", color: "#000", textShadow: "4px 4px 8px rgba(0, 0, 0, 0.5)" }}>
+          <u>Welcome to the GAMING NEWS section</u>
+        </div>
+
+        <h1 style={{ color: "#000" }}>News:</h1>
+        {news.map((article, index) => (
+          <div
+            key={index}
+            style={{
+              backgroundColor: "#fff",
+              borderRadius: "8px",
+              marginBottom: "20px",
+              padding: "20px",
+              transition: "transform 0.2s, background-color 0.2s", // Add transition effect
+              transform: article.isHovered ? "scale(1.02)" : "scale(1)", // Scale up on hover
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)", // Add more shadow to the smaller boxes
+            }}
+            onMouseEnter={() => handleMouseEnter(index)}
+            onMouseLeave={() => handleMouseLeave(index)}
+          >
+            <article>
+              <h2 style={{ marginTop: "0", marginBottom: "10px", color: "#000" }}>{article.title}</h2>
+              <p style={{ marginTop: "0", marginBottom: "10px", color: "#333" }}>{article.description}</p>
+              <a href={article.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+                <div
+                  style={{
+                    backgroundColor: article.isHovered ? "#007bff" : "#ddd", // Change color on hover
+                    color: "#fff",
+                    padding: "5px 10px",
+                    borderRadius: "5px",
+                    display: "inline-block",
+                    transition: "background-color 0.2s", // Add transition effect
+                  }}
+                >
+                  Read more
+                </div>
+              </a>
+            </article>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
-555;
+
+// HERE //
