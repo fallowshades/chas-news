@@ -429,16 +429,116 @@ return(
 
 lib\store
 lib\features\bookmark
-lib\hooks
+lib\hooks (kanske i framtiden)
 
 förbered dokumentation enligt 3 faser enligt https://github.com/kirill-konshin/next-redux-wrapper?tab=readme-ov-file#how-it-works
 
 - blir någ lite annorlunda
 
-#### Phase 1: getInitialProps/getStaticProps/getServerSideProps
+#### Phase 1: getInitialProps/getStaticProps/getServerSideProps (kan "merge" med redux, snart...)
+
+userSlice.js
+
+- vill ha några värden som inte är en array
 
 ```js
+import { createSlice } from '@reduxjs/toolkit'
 
+const initialState = {
+  fontSize: 'medium',
+  reduceAnimations: false,
+}
+
+const userPreferencesSlice = createSlice({
+  name: 'userPreferences',
+  initialState,
+  reducers: {
+    setFontSize: (state, action) => {
+      state.fontSize = action.payload
+    },
+    setReduceAnimations: (state, action) => {
+      state.reduceAnimations = action.payload
+    },
+  },
+})
+
+export const { setFontSize, setReduceAnimations } = userPreferencesSlice.actions
+
+export default userPreferencesSlice.reducer
+```
+
+bookmarkSlice.js
+
+- enligt uppgiften
+
+```js
+import { createSlice } from '@reduxjs/toolkit'
+
+const initialState = {
+  bookmarks: [],
+}
+
+export const subjectSlice = createSlice({
+  name: 'bookmark',
+  initialState,
+  reducers: {
+    addBookmark: (state, action) => {
+      state.bookmarks.push(action.payload)
+    },
+    removeBookmark: (state, action) => {
+      state.bookmarks = state.bookmarks.filter(
+        (bookmark) => bookmark.id !== action.payload.id
+      )
+    },
+    clearBookmarks: (state) => {
+      state.bookmarks = []
+    },
+  },
+})
+
+export const { addBookmark, removeBookmark, clearBookmarks } =
+  subjectSlice.actions
+
+export default subjectSlice.reducer
+```
+
+store.js
+
+- \_app är för dålig, behöver wrappa för att lägga till hydrate funktion
+
+```js
+import {
+  combineReducers,
+  configureStore,
+  applyMiddleware,
+} from '@reduxjs/toolkit'
+
+import bookmark from './features/bookmark/bookmarkSlice'
+import userPreferences from './features/user/userSlice'
+
+const combinedReducer = combineReducers({
+  bookmark,
+  userPreferences,
+})
+
+import { HYDRATE, createWrapper } from 'next-redux-wrapper'
+
+/**NOT redux
+ * const makeStore = () => {
+  return createStore(combinedReducer, composeWithDevTools(applyMiddleware()))
+}
+ */
+const initStoreWithProps = () => {
+  return configureStore({
+    reducer: {
+      bookmark,
+      userPreferences,
+    },
+    devTools: true,
+  })
+}
+
+export const wrapper = createWrapper(initStoreWithProps)
 ```
 
 #### Phase 2: SSR
