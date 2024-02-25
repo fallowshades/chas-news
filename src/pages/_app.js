@@ -3,7 +3,6 @@ import '@/styles/navbar.css'
 
 import Layout from './layoutProvider'
 import Navbar from '@/components/Navbar'
-
 import { wrapper } from '@/lib/store'
 
 function App({ Component, pageProps }) {

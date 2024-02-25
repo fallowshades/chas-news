@@ -39,7 +39,7 @@ const NewsCard = ({ newsItem }) => {
   const dispatch = useDispatch()
 
   const bookmark = () => {
-    dispatch(addBookmark(article_id))
+    dispatch(addBookmark(newsItem))
   }
 
   return (

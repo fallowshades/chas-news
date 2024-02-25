@@ -14,7 +14,9 @@ const rootReducer = combineReducers({
 
 import { HYDRATE, createWrapper } from 'next-redux-wrapper'
 
-const masterReducer = (state, action) => {
+//um not sure if needed since is redux toolkit
+/**
+ * const masterReducer = (state, action) => {
   if (action.type === HYDRATE) {
     const nextState = {
       ...state,
@@ -25,19 +27,28 @@ const masterReducer = (state, action) => {
     return rootReducer(state, action)
   }
 }
+ */
 
 /**NOT redux
  * const makeStore = () => {
   return createStore(combinedReducer, composeWithDevTools(applyMiddleware()))
 }
  */
+import thunk, { ThunkAction } from 'redux-thunk'
+import { Action } from 'redux'
+
 const initStoreWithProps = () => {
   return configureStore({
-    reducer: {
-      reducer: masterReducer,
-    },
+    reducer: rootReducer,
     devTools: true,
   })
 }
+
+/**
+ * @typedef {import('redux').Store} AppStore
+ * @typedef {ReturnType<AppStore['getState']>} AppState
+ * @typedef {import('redux-thunk').ThunkAction} ThunkAction
+ * @typedef {import('redux').Action} Action
+ */
 
 export const wrapper = createWrapper(initStoreWithProps)

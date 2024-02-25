@@ -1,29 +1,28 @@
-import { useSelector, useDispatch } from 'react-redux'
-
 import React from 'react'
+import { useSelector } from 'react-redux'
+import NewsCard from '@/components/NewsCard'
 
-//NOTE:THIS PAGE IS "WORKING" AND CAN BE USED IT
-export default function Bookmarks2() {
+import { v4 as uuidv4 } from 'uuid'
+
+const Bookmarks2 = () => {
   const bookmarks = useSelector((state) => state.bookmark?.bookmarks)
-  console.log(bookmarks?.length)
 
-  function bookmarksDoesNotWorkOrNotExits() {
-    return !bookmarks || bookmarks?.length == 0
-  }
-
-  if (bookmarksDoesNotWorkOrNotExits) {
+  if (!bookmarks || bookmarks.length === 0) {
     return (
       <div>
-        <p>no bookmarks. please add some yourself.</p>
+        <p>No bookmarks. Please add some yourself.</p>
       </div>
     )
   }
+
   return (
     <div>
-      {bookmarks.map((bookmark) => {
-        return <p>{bookmark}</p>
-      })}
-      <h1>Bookmarks Articles</h1>
+      {/* Render your bookmarks here */}
+      {bookmarks.map((bookmark) => (
+        <NewsCard key={uuidv4()} newsItem={bookmark} />
+      ))}
     </div>
   )
 }
+
+export default Bookmarks2

@@ -1,6 +1,7 @@
 // subjectSlice.js
 import { createSlice } from '@reduxjs/toolkit'
 
+import { HYDRATE } from 'next-redux-wrapper'
 const initialState = {
   bookmarks: [],
 }
@@ -19,6 +20,17 @@ export const subjectSlice = createSlice({
     },
     clearBookmarks: (state) => {
       state.bookmarks = []
+    },
+    extraReducers: {
+      [HYDRATE]: (state, action) => {
+        console.log('HYDRATE', action.payload)
+
+        if (!action.payload.bookmark.bookmarks) {
+          return state
+        }
+
+        state.name = action.payload.bookmark.bookmarks
+      },
     },
   },
 })

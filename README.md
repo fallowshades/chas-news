@@ -685,8 +685,110 @@ export default function Bookmarks2() {
 }
 ```
 
+#### fix missing
+
+##### ie thunc
+
+- need middleware aswell to imitate remote fetch (we mock the data)
+
+```sh
+npm install redux-thunk
+npm install next-redux-wrapper
+```
+
+NewsCard.js
+
+- dispatch the whole item
+
+```js
+const bookmark = () => {
+  dispatch(addBookmark(newsItem))
+}
+```
+
+store.js
+
+- if this was type script the parent must inform about thunc used in child slice?
+
+```js
+import thunk, { ThunkAction } from 'redux-thunk'
+
+import { Action } from 'redux'
+
+const initStoreWithProps = () => {
+  return configureStore({
+    reducer: rootReducer,
+    devTools: true,
+  })
+}
+
+/**
+
+ * @typedef {import('redux').Store} AppStore
+
+ * @typedef {ReturnType<AppStore['getState']>} AppState
+
+ * @typedef {import('redux-thunk').ThunkAction} ThunkAction
+
+ * @typedef {import('redux').Action} Action
+
+ */
+```
+
+bookmarkSlie.js
+
+- middleware return resolved data into the extra reduxer
+
 ```js
 
+
+import { HYDRATE } from 'next-redux-wrapper'
+
+...
+
+   extraReducers: {
+
+      [HYDRATE]: (state, action) => {
+
+        console.log('HYDRATE', action.payload)
+
+
+
+        if (!action.payload.bookmark.bookmarks) {
+
+          return state
+
+        }
+
+
+
+        state.name = action.payload.bookmark.bookmarks
+
+      },
+
+    },
+```
+
+bookmark2.js
+
+```js
+import { useSelector } from 'react-redux'
+
+import NewsCard from '@/components/NewsCard'
+
+import { v4 as uuidv4 } from 'uuid'
+
+const Bookmarks2 = () => {
+  const bookmarks = useSelector((state) => state.bookmark?.bookmarks)
+
+  return (
+    <div>
+      {bookmarks.map((bookmark) => (
+        <NewsCard key={uuidv4()} newsItem={bookmark} />
+      ))}
+    </div>
+  )
+}
 ```
 
 ## Getting Started
