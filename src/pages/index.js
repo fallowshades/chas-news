@@ -1,12 +1,17 @@
 import LatestNewsArticle from "@/components/LatestNewsArticle";
 import { useState, useEffect } from "react";
 
+/* API_KEY = "";
+fetch(
+  `https://newsdata.io/api/1/news?apikey=${API_KEY}&language=en&category=top&size=10`
+); */
+
 //NOTE: THIS IS THE START PAGE HOME! :)
 export default function Home() {
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    fetch("/api/copy/latestNews")
+    fetch("api/copy/latestNews")
       .then((res) => res.json())
       .then((data) => setList(data.results));
   }, []);
