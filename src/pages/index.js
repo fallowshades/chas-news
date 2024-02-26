@@ -11,18 +11,20 @@ export default function Home() {
       .then((data) => setList(data.results));
   }, []);
 
-  /* console.log(list); */
   return (
     <main class="justify-center items-center">
       <div>
-        <div class="p-4 grid justify-center items-center text-4xl">Latest News</div>
+        <div class="p-4 grid justify-center items-center text-5xl font-semibold">
+          Latest News
+        </div>
       </div>
-      <div >
+      <div>
         <ul className="grid grid-cols justify-center items-center gap-3 bg-slate-700">
           {list.map((article) => (
             <li
               className="grid grid-cols justify-center items-center bg-slate-300 p-2 m-2 rounded-xl "
-              key={article.id}>
+              key={article.id}
+            >
               <LatestNewsArticle articleObj={article} />
             </li>
           ))}

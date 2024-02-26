@@ -2,7 +2,6 @@ import Link from "next/link";
 
 const textStyle = "hover:text-amber-400"; //Tailwind style
 
-//TODO:FIX CATEGORIES , SUB-MENU
 const Navbar = () => {
   return (
     <div class="flex flex-row w-full bg-[#343434] items-center justify-around">
