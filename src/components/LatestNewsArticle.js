@@ -11,7 +11,7 @@ export default function LatestNewsArticle(props) {
       <div class="grid justify-center items-center text-xl">
         Publication Date: {realizedDate}
       </div>
-      <div class="grid justify-center items-center text-4xl font-medium">
+      <div class="grid p-2 justify-center items-center text-4xl font-medium">
         {title}
       </div>
 
