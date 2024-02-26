@@ -6,7 +6,7 @@ const LayoutContext = createContext();
 const Layout = ({ children }) => {
   return (
     <LayoutContext.Provider value={{}}>
-      <main className="grid lg:grid-cols-5">
+      <main className="grid lg:grid-cols-4">
         {/* first-col hide on small screen */}
 
         {/* second-col hide dropdown on big screen */}
